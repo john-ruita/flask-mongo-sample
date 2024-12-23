@@ -1,0 +1,67 @@
+name: Build API and Deploy to K8 Cluster
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "api/**"
+      - "k8s/api-dep.yaml"
+      - ".github/workflows/api.yml"
+  workflow_dispatch:
+
+env:
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Azure
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Build container image and push to registry
+        run: |
+          echo "${{ secrets.ENV_PROD }}" > .env
+          DOCKER_BUILDKIT=1 docker build --target prod -t ${{ secrets.DOCKER_REGISTRY }}/efisales-web-api:$IMAGE_TAG .
+          docker push ${{ secrets.DOCKER_REGISTRY }}/efisales-web-api:$IMAGE_TAG
+
+  dep-api:
+    name: Deploy Api
+    runs-on: ubuntu-latest
+    needs: [ build-api ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.CLUSTER_NAME }}
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+      - name: Update deployment file
+        run: |
+          sed -i 's|<IMAGE>|${{ secrets.DOCKER_REGISTRY }}/efisales-web-api:'$IMAGE_TAG'|' $GITHUB_WORKSPACE/k8s/api-dep.yaml
+          sed -i 's|<DOMAIN>|${{ secrets.APP_DOMAIN }}|' $GITHUB_WORKSPACE/k8s/api-dep.yaml
+      - name: Deploy to AKS
+        id: deploy-aks
+        uses: azure/k8s-deploy@v4
+        with:
+          namespace: efisales-web-api-ns
+          manifests: k8s/api-dep.yaml
+      - name: Migrate database in one of the pods
+        run: |
+          kubectl exec -it $(kubectl get endpoints -n efisales-web-api-ns efisales-web-api-service -o jsonpath='{.subsets[0].addresses[0].targetRef.name}') -n efisales-web-api-ns -- /bin/bash -c './docker/migrate.sh'

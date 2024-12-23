@@ -1,0 +1,9 @@
+Flask
+flask-marshmallow
+flask-restful
+python-dotenv
+cloudinary
+eventlet
+gunicorn
+Flask-PyMongo
+pymongo[srv]
