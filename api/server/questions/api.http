@@ -1,0 +1,65 @@
+### Create a question
+POST {{base_url}}/question
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Question": "The function f(d) = -0.05d + 13.2 models the volume of fuel (in gallons) left in a truck's fuel tank after driving d miles. Based on this model, approximately how many gallons of fuel are consumed for every mile driven?",
+  "Solution": "<color=green>Choice A is correct.</color> The function given is:\n<b><color=black>f(d) = -0.05d + 13.2</color></b>\n\nHere, the coefficient of d (which is -0.05) represents the change in the volume of fuel for each additional mile driven. \n\nSince it's negative, it indicates that the truck uses 0.05 gallons for each mile.\n",
+  "CorrectAnswer": "0.05",
+  "Options": [
+    "0.05",
+    "13.2",
+    "21",
+    "264"
+  ],
+  "Steps": [
+    {
+      "Title": "Step Title 1",
+      "Result": "Result Title 1"
+    },
+    {
+      "Title": "Step Title 2",
+      "Result": "Result Title 2"
+    }
+  ]
+}
+
+### get a question
+GET {{base_url}}/question/676bca3de748ea6671905f2e
+Accept: application/json
+
+### update a question
+PUT {{base_url}}/question/676bca3de748ea6671905f2e
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Question": "The function f(d) = -0.05d + 13.2 models the volume of fuel (in gallons) left in a truck's fuel tank after driving d miles. Based on this model, approximately how many gallons of fuel are consumed for every mile driven?",
+  "Solution": "<color=green>Choice A is correct.</color> The function given is:\n<b><color=black>f(d) = -0.05d + 13.2</color></b>\n\nHere, the coefficient of d (which is -0.05) represents the change in the volume of fuel for each additional mile driven. \n\nSince it's negative, it indicates that the truck uses 0.05 gallons for each mile.\n",
+  "CorrectAnswer": 0,
+  "Options": [
+    "0.05",
+    "13.2",
+    "21",
+    "264"
+  ],
+  "Steps": [
+    {
+      "Title": "Step Title 1",
+      "Result": "Result Title 1"
+    },
+    {
+      "Title": "Step Title 2",
+      "Result": "Result Title 2"
+    }
+  ]
+}
+
+### delete a question
+DELETE {{base_url}}/question/676bca3de748ea6671905f2e
+Accept: application/json
+
+### get all questions
+GET {{base_url}}/questions
+Accept: application/json

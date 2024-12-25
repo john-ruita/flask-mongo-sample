@@ -1,9 +1,8 @@
 Flask
 flask-marshmallow
-flask-restful
+flask-restful-swagger-3
 python-dotenv
-cloudinary
-eventlet
 gunicorn
 Flask-PyMongo
 pymongo[srv]
+pytest

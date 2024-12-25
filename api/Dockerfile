@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY .. .
 
 ENTRYPOINT ["gunicorn"]
-CMD ["--worker-class", "eventlet", "-w", "1", "-b", "0.0.0.0:5000", "server:app"]
+CMD ["-b", "0.0.0.0:5000", "server:app"]
