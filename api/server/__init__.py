@@ -17,7 +17,7 @@ def index():
     return render_template("index.html")
 
 # api
-api = Api(app,  version="1.0")
+api = Api(app,  version="1.0", servers=[{'url':'https://sat-sample.writers.ke/api'}])
 api.prefix = '/api'
 
 from .questions import QuestionResource, QuestionsListResource, QuestionAddResource
