@@ -1,25 +1,25 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: efisales-web-api-ns
+  name: sat-sample-api-ns
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: efisales-web-api-dep
-  namespace: efisales-web-api-ns
+  name: sat-sample-api-dep
+  namespace: sat-sample-api-ns
   labels:
-    app: efisales-web-api-dep
+    app: sat-sample-api-dep
 spec:
   replicas: 1
   template:
     metadata:
-      name: efisales-web-api-dep
+      name: sat-sample-api-dep
       labels:
-        app: efisales-web-api-dep
+        app: sat-sample-api-dep
     spec:
       containers:
-        - name: efisales-web-api-dep
+        - name: sat-sample-api-dep
           image: <IMAGE>
           imagePullPolicy: IfNotPresent
           ports:
@@ -27,16 +27,16 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: efisales-web-api-dep
+      app: sat-sample-api-dep
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: efisales-web-api-service
-  namespace: efisales-web-api-ns
+  name: sat-sample-api-service
+  namespace: sat-sample-api-ns
 spec:
   selector:
-    app: efisales-web-api-dep
+    app: sat-sample-api-dep
   ports:
     - port: 80
       targetPort: 5000
@@ -44,8 +44,8 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: efisales-web-api-cert-manager
-  namespace: efisales-web-api-ns
+  name: sat-sample-api-cert-manager
+  namespace: sat-sample-api-ns
 spec:
   acme:
     email: w.johnruita@gmail.com
@@ -60,10 +60,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: efisales-web-api-ingress
-  namespace: efisales-web-api-ns
+  name: sat-sample-api-ingress
+  namespace: sat-sample-api-ns
   annotations:
-    cert-manager.io/issuer: efisales-web-api-cert-manager
+    cert-manager.io/issuer: sat-sample-api-cert-manager
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
@@ -75,10 +75,10 @@ spec:
           path: /api(/|$)(.*)
           backend:
             service:
-              name: efisales-web-api-service
+              name: sat-sample-api-service
               port:
                 number: 80
   tls:
     - hosts:
         - <DOMAIN>
-      secretName: letsencrypt-nginx-efisales-web-api
+      secretName: letsencrypt-nginx-sat-sample-api

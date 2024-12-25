@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful_swagger_3 import Api
 
 from .extensions import *
@@ -12,6 +12,9 @@ app.config.from_prefixed_env()
 
 ma.init_app(app)
 mongo.init_app(app)
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 # api
 api = Api(app,  version="1.0")

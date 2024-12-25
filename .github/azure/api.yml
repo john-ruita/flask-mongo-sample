@@ -29,8 +29,8 @@ jobs:
       - name: Build container image and push to registry
         run: |
           echo "${{ secrets.ENV_PROD }}" > .env
-          DOCKER_BUILDKIT=1 docker build --target prod -t ${{ secrets.DOCKER_REGISTRY }}/efisales-web-api:$IMAGE_TAG .
-          docker push ${{ secrets.DOCKER_REGISTRY }}/efisales-web-api:$IMAGE_TAG
+          DOCKER_BUILDKIT=1 docker build --target prod -t ${{ secrets.DOCKER_REGISTRY }}/sat-sample-api:$IMAGE_TAG .
+          docker push ${{ secrets.DOCKER_REGISTRY }}/sat-sample-api:$IMAGE_TAG
 
   dep-api:
     name: Deploy Api
@@ -54,14 +54,14 @@ jobs:
         uses: azure/setup-kubectl@v3
       - name: Update deployment file
         run: |
-          sed -i 's|<IMAGE>|${{ secrets.DOCKER_REGISTRY }}/efisales-web-api:'$IMAGE_TAG'|' $GITHUB_WORKSPACE/k8s/api-dep.yaml
+          sed -i 's|<IMAGE>|${{ secrets.DOCKER_REGISTRY }}/sat-sample-api:'$IMAGE_TAG'|' $GITHUB_WORKSPACE/k8s/api-dep.yaml
           sed -i 's|<DOMAIN>|${{ secrets.APP_DOMAIN }}|' $GITHUB_WORKSPACE/k8s/api-dep.yaml
       - name: Deploy to AKS
         id: deploy-aks
         uses: azure/k8s-deploy@v4
         with:
-          namespace: efisales-web-api-ns
+          namespace: sat-sample-api-ns
           manifests: k8s/api-dep.yaml
       - name: Migrate database in one of the pods
         run: |
-          kubectl exec -it $(kubectl get endpoints -n efisales-web-api-ns efisales-web-api-service -o jsonpath='{.subsets[0].addresses[0].targetRef.name}') -n efisales-web-api-ns -- /bin/bash -c './docker/migrate.sh'
+          kubectl exec -it $(kubectl get endpoints -n sat-sample-api-ns sat-sample-api-service -o jsonpath='{.subsets[0].addresses[0].targetRef.name}') -n sat-sample-api-ns -- /bin/bash -c './docker/migrate.sh'

@@ -60,6 +60,6 @@ Content-Type: application/json
 DELETE {{base_url}}/question/676bca3de748ea6671905f2e
 Accept: application/json
 
-### get all questions
+### list all questions
 GET {{base_url}}/questions
 Accept: application/json
