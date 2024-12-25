@@ -61,6 +61,3 @@ jobs:
         with:
           namespace: sat-sample-api-ns
           manifests: k8s/api-dep.yaml
-      - name: Migrate database in one of the pods
-        run: |
-          kubectl exec -it $(kubectl get endpoints -n sat-sample-api-ns sat-sample-api-service -o jsonpath='{.subsets[0].addresses[0].targetRef.name}') -n sat-sample-api-ns -- /bin/bash -c './docker/migrate.sh'

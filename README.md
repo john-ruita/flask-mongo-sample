@@ -4,7 +4,8 @@
 1. Install docker and docker-compose
 2. Clone the repository
 3. cd into the repository
-4. Run `docker-compose up`
+4. Copy the .env.example file to .env and update the values
+5. Run `docker-compose up`
 
 ## CRUD operations and JSON List
 If your are using Pycharm open the file api.http and run the requests.
