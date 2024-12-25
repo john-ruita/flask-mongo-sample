@@ -31,7 +31,6 @@ jobs:
           echo "${{ secrets.ENV_PROD }}" > .env
           DOCKER_BUILDKIT=1 docker build --target prod -t ${{ secrets.DOCKER_REGISTRY }}/sat-sample-api:$IMAGE_TAG .
           docker push ${{ secrets.DOCKER_REGISTRY }}/sat-sample-api:$IMAGE_TAG
-
   dep-api:
     name: Deploy Api
     runs-on: ubuntu-latest
