@@ -5,7 +5,7 @@ on:
     paths:
       - "api/**"
       - "k8s/api-dep.yaml"
-      - "/api.yml"
+      - ".github/workflows/api.yml"
   workflow_dispatch:
 
 env:
