@@ -2,9 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SAT API Sample</title>
+    <title>SAT-sample API</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="max-w-7xl mx-auto bg-gray-100 font-sans flex flex-col min-h-screen">
+<header class="flex-none bg-green-500 text-white p-6 text-center">
+    <h1 class="text-3xl font-bold">Welcome to the SAT-Sample API</h1>
+</header>
+<main class="grow p-6">
 
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Description</h2>
+        <p class="text-lg">
+            This API provides a simple CRUD interface for managing SAT questions. Each question has a
+            question, solution, correct answer, options, steps, an image URL and other optional key value pairs. The
+            source code for this API can be found on <a target="_blank"
+                href="https://github.com/john-ruita/flask-mongo-sample"
+                class="text-blue-500 underline hover:text-blue-700">GitHub</a>
+        </p>
+    </section>
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">
+            Endpoints <small class="text-xs">
+            Download <a href="/postman"
+                        class="text-blue-500 underline hover:text-blue-700">postman
+            collection</a></small></h2>
+        <ul class="list-none space-y-4">
+            <li class="bg-white p-4 border border-gray-300 rounded shadow">
+                <strong>Create:</strong> POST /api/question
+            </li>
+            <li class="bg-white p-4 border border-gray-300 rounded shadow">
+                <strong>Read:</strong> GET /api/question/{id}
+            </li>
+            <li class="bg-white p-4 border border-gray-300 rounded shadow">
+                <strong>Update:</strong> PUT /api/question/{id}
+            </li>
+            <li class="bg-white p-4 border border-gray-300 rounded shadow">
+                <strong>Delete:</strong> DELETE /api/question/{id}
+            </li>
+            <li class="bg-white p-4 border border-gray-300 rounded shadow">
+                <strong>List:</strong> GET /api/questions
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2 class="text-2xl font-semibold mb-4">Example JSON for Create and Update</h2>
+        <pre class="bg-gray-800 text-white p-4 rounded overflow-x-auto">
+{
+  "Question": "The function f(d) = -0.05d + 13.2 models the volume of fuel (in gallons) left in a truck's fuel tank after driving d miles. Based on this model, approximately how many gallons of fuel are consumed for every mile driven?",
+  "Solution": "<color=green>Choice A is correct.</color> The function given is:\n<b><color=black>f(d) = -0.05d + 13.2</color></b>\n\nHere, the coefficient of d (which is -0.05) represents the change in the volume of fuel for each additional mile driven. \n\nSince it's negative, it indicates that the truck uses 0.05 gallons for each mile.\n",
+  "CorrectAnswer": 0,
+  "Options": [
+    "0.05",
+    "13.2",
+    "21",
+    "264"
+  ],
+  "Steps": [
+    {
+      "Title": "Step Title 1",
+      "Result": "Result Title 1",
+      "ImageUrl": "https://picsum.photos/id/28/200/300"
+    },
+    {
+      "Title": "Step Title 2",
+      "Result": "Result Title 2",
+      "ImageUrl": "https://picsum.photos/id/29/200/300"
+    }
+  ],
+  "ImageUrl": "https://picsum.photos/id/237/200/300"
+}
+            </pre>
+    </section>
+</main>
+<footer class="flex-none bg-gray-800 text-white text-center p-4 bottom-0">
+    &copy; 2023 SAT-Sample API. All rights reserved.
+</footer>
 </body>
 </html>

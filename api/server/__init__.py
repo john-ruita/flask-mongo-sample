@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from dns.message import make_response
+from flask import Flask, render_template, Response
 from flask_restful import Api
 
 from .extensions import *
@@ -21,6 +22,12 @@ mongo.init_app(app)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+# Define route for downloading the postman collection
+@app.route("/postman")
+def postman():
+    static_file = "SAT-Sample.postman_collection.json"
+    return Response(static_file, mimetype="application/json", headers={"Content-Disposition": "attachment;filename=" + static_file})
 
 # Initialize Flask-RESTful API
 api = Api(app)

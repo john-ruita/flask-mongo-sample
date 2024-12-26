@@ -1,11 +1,33 @@
-# flask-mongo-sample
+# SAT Sample Questions API
 
-## How to set up locally
-1. Install docker and docker-compose
-2. Clone the repository
-3. cd into the repository
-4. Copy the .env.example file to .env and update the values
-5. Run `docker-compose up`
+## Demo
+You can access the online demo at [https://sat-sample.writers.ke](https://sat-sample.writers.ke)
+
+## Setting Up
+
+### Prerequisites
+- Docker
+- Docker Compose
+
+### Steps
+1. Clone the repository:
+    ```sh
+    git clone git@github.com:john-ruita/flask-mongo-sample.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd flask-mongo-sample
+    ```
+3. Copy the `.env.example` file to `.env` and update the values as needed:
+    ```sh
+    cp .env.example .env
+    ```
+4. Build and start the Docker containers:
+    ```sh
+    docker-compose up
+    ```
+
+Your application should now be running and accessible at `http://localhost:5000`.
 
 ## CRUD operations and JSON List
 If your are using Pycharm open the file api.http and run the requests.
@@ -15,8 +37,8 @@ api
   └── questions
     └── api.http
 ```
-
-You can also use Postman or any other API testing tool and use the following endpoints.
+Or download the [postman collection](https://sat-sample.writers.ke/postman) and use postman.
+You can also use any other API testing tool and use the following endpoints.
 ### Create
 - POST /api/question
 ```json
@@ -61,13 +83,16 @@ You can also use Postman or any other API testing tool and use the following end
   "Steps": [
     {
       "Title": "Step Title 1",
-      "Result": "Result Title 1"
+      "Result": "Result Title 1",
+      "ImageUrl": "https://picsum.photos/id/28/200/300"
     },
     {
       "Title": "Step Title 2",
-      "Result": "Result Title 2"
+      "Result": "Result Title 2",
+      "ImageUrl": "https://picsum.photos/id/29/200/300"
     }
-  ]
+  ],
+  "ImageUrl": "https://picsum.photos/id/237/200/300"
 }
 ```
 
