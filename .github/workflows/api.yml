@@ -7,7 +7,6 @@ on:
       - "k8s/api-dep.yaml"
       - ".github/workflows/api.yml"
   workflow_dispatch:
-
 env:
   IMAGE_TAG: ${{ github.sha }}
 
