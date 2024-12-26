@@ -30,6 +30,7 @@ You can access the online demo at [https://sat-sample.writers.ke](https://sat-sa
 Your application should now be running and accessible at `http://localhost:5000`.
 
 ## CRUD operations and JSON List
+****
 If your are using Pycharm open the file api.http and run the requests.
 ```
 api
@@ -38,7 +39,10 @@ api
     └── api.http
 ```
 Or download the [postman collection](https://sat-sample.writers.ke/postman) and use postman.
+Base url for online demo is https://sat-sample.writers.ke/api.
+****
 You can also use any other API testing tool and use the following endpoints.
+
 ### Create
 - POST /api/question
 ```json
