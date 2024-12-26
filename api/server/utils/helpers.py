@@ -7,14 +7,17 @@ from ..utils.http_codes import HTTP_200_OK, HTTP_201_CREATED, HTTP_422_UNPROCESS
 
 def generate_response(data=None, message=None, status=HTTP_200_OK, **kwargs):
     """
-    It takes in a data, message, and status, and returns a dictionary with the data, message, and status
+    Generate a standardized response for the API.
 
-    :param data: The data that you want to send back to the sacco
-    :param message: This is the message that you want to display to the user
-    :param status: The HTTP status code, defaults to 400 (optional)
-    :return: A dictionary with the keys: data, message, status.
+    Args:
+        data (dict, optional): The data to include in the response. Defaults to None.
+        message (str, optional): The message to include in the response. Defaults to None.
+        status (int, optional): The HTTP status code for the response. Defaults to HTTP_200_OK.
+        **kwargs: Additional keyword arguments to include in the response.
+
+    Returns:
+        tuple: A tuple containing the response dictionary and the HTTP status code.
     """
-
     response = {
         "message": "Validation Error" if status == HTTP_422_UNPROCESSABLE_ENTITY else message,
         **kwargs
@@ -26,8 +29,17 @@ def generate_response(data=None, message=None, status=HTTP_200_OK, **kwargs):
     return response, status
 
 
-"""Decorator that adds pagination to a function that returns a list of items"""
 def paginate(f, arg_keys={'page': 1, 'per_page': 10}):
+    """
+    A decorator to add pagination to a Flask route.
+
+    Args:
+        f (function): The function to be decorated.
+        arg_keys (dict): A dictionary with default pagination arguments.
+
+    Returns:
+        function: The decorated function with pagination.
+    """
     @wraps(f)
     def decorated(*args, **kwargs):
         entries = {key: int(request.args.get(key, value)) for key, value in arg_keys.items()}

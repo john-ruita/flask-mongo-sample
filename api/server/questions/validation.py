@@ -2,6 +2,14 @@ from marshmallow import Schema, fields, EXCLUDE, ValidationError, validates_sche
 
 
 class StepSchema(Schema):
+    """
+    Schema for a step in solving a question.
+
+    Attributes:
+        Title (str): The title of the step.
+        Result (str): The result or outcome of the step.
+        ImageUrl (str, optional): The URL of an image related to the step.
+    """
     class Meta:
         unknown = EXCLUDE
 
@@ -9,7 +17,19 @@ class StepSchema(Schema):
     Result = fields.Str(required=True)
     ImageUrl = fields.Str(allow_none=True)
 
+
 class StoreQuestionSchema(Schema):
+    """
+    Schema for storing a question.
+
+    Attributes:
+        Question (str): The question text.
+        Options (list): A list of possible answers.
+        CorrectAnswer (any): The correct answer, which can be of any type.
+        Solution (str): The solution or explanation for the question.
+        ImageUrl (str, optional): The URL of an image related to the question.
+        Steps (list): A list of steps to solve the question, each step being a dictionary.
+    """
     class Meta:
         unknown = EXCLUDE
 
@@ -22,6 +42,16 @@ class StoreQuestionSchema(Schema):
 
     @validates_schema
     def validate_correct_answer(self, data, **kwargs):
+        """
+        Validate that the CorrectAnswer is in the Options list.
+
+        Args:
+            data (dict): The data to validate.
+            **kwargs: Additional keyword arguments.
+
+        Raises:
+            ValidationError: If the CorrectAnswer is not in the Options list.
+        """
         options = data.get("Options", [])
         correct_answer = data.get("CorrectAnswer")
 

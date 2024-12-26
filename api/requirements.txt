@@ -1,6 +1,6 @@
 Flask
 flask-marshmallow
-flask-restful-swagger-3
+flask-restful
 python-dotenv
 gunicorn
 Flask-PyMongo
