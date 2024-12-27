@@ -55,14 +55,15 @@ class StoreQuestionSchema(Schema):
         options = data.get("Options", [])
         correct_answer = data.get("CorrectAnswer")
 
-        if isinstance(correct_answer, int):
-            if not (0 <= correct_answer < len(options)):
+        try:
+            if not (0 <= int(correct_answer) < len(options)) or correct_answer not in options:
                 raise ValidationError(
                     "CorrectAnswer must be in the Options list.",
                     field_name="CorrectAnswer"
                 )
-        elif correct_answer not in options:
-            raise ValidationError(
-                "CorrectAnswer must be in the Options list.",
-                field_name="CorrectAnswer"
-            )
+        except ValueError:
+            if correct_answer not in options:
+                raise ValidationError(
+                    "CorrectAnswer must be in the Options list.",
+                    field_name="CorrectAnswer"
+                )
