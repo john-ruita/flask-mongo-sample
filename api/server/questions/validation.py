@@ -56,7 +56,7 @@ class StoreQuestionSchema(Schema):
         correct_answer = data.get("CorrectAnswer")
 
         try:
-            if not (0 <= int(correct_answer) < len(options)) or correct_answer not in options:
+            if not (0 <= int(correct_answer) < len(options)) and correct_answer not in options:
                 raise ValidationError(
                     "CorrectAnswer must be in the Options list.",
                     field_name="CorrectAnswer"
